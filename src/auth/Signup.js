@@ -8,9 +8,10 @@ const Signup = (props) => {
     let handleSubmit = (event) => {
         event.preventDefault();
         console.log(username, password);
+
         fetch("http://localhost:3000/user/register", {
             method: 'POST',
-            body: JSON.stringify({user: {username}, password:{password}}),
+            body: JSON.stringify({username: username, passwordhash:password}),
             headers: new Headers({
                 'Content-Type': 'application/json'
             })
@@ -28,11 +29,20 @@ const Signup = (props) => {
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label htmlFor="username">Username</Label>
-                    <Input onChange={(e) => setUsername(e.target.value)} name="username" value={username} />
+                    <Input 
+                        placeholder="Enter a username"
+                        onChange={(e) => setUsername(e.target.value)} 
+                        name="username" 
+                        value={username} 
+                    />
+                    {username === "" ? <Label style={{color: 'red'}}>A username is required</Label> : null }
                 </FormGroup>
                 <FormGroup>
                     <Label htmlFor="password">Password</Label>
-                    <Input onChange={(e) => setPassword(e.target.value)} name="password" value={password} />
+                    <Input 
+                        placeholder="Enter a password"
+                        onChange={(e) => setPassword(e.target.value)} name="password" value={password} 
+                    />
                 </FormGroup>
                 <Button type="submit">Signup</Button>
             </Form>
